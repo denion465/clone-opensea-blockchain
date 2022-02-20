@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "package.json",
-  "author": "Daniel Vidal <danielsv465@hotmail.com>",
+  "author": "Daniel Vidal",
   "license": "UNLICENSED",
   "scripts": {
     "start": "sanity start",
