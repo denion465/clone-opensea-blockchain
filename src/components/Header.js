@@ -31,15 +31,15 @@ const Header = () => {
 			</div>
 			<input 
 				className={style.searchInput} 
-				placeholder='Buscar itens, coleções e contas ' />
+				placeholder='Search items, collections and accounts' />
 		</div>
 		<div className={style.headerItems}>
 			<Link href="/collections/0x2c460C8b4571Db667CD7e9D8bbaedd1Cd0B80CF8">
-				<div className={style.headerItem}>Coleções</div>
+				<div className={style.headerItem}>Collections</div>
 			</Link>
-			<div className={style.headerItem}>Estatísticas</div>
-			<div className={style.headerItem}>Recursos</div>
-			<div className={style.headerItem}>Criar</div>
+			<div className={style.headerItem}>Stats</div>
+			<div className={style.headerItem}>resources</div>
+			<div className={style.headerItem}>Create</div>
 			<div className={style.headerIcon}>
 				<CgProfile />
 			</div>
