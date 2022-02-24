@@ -3,7 +3,7 @@ const style = {
 	wrapper: 'relative',
 	container: `before:content-[''] before:bg-red-500 before:absolute before:top-0 
 	before:left-0 before:right-0 before:bottom-0 
-	before:bg-[url('https://lh3.googleusercontent.com/ujepnqpnL0nDQIHsWxlCXzyw4pf01yjz1Jmb4kAQHumJAPrSEj0-e3ABMZlZ1HEpJoqwOcY_kgnuJGzfXbd2Tijri66GXUtfN2MXQA=s250')] 
+	before:bg-[url('https://lh3.googleusercontent.com/rJkZc8N393a-Xyx4TxKba6L9vWAGoCLG6z8R3v_AjZtb_mj3cJsNaS35wmUnYRxh3xt1HEmAN1oOcbjLbnDG_kMSNexAboU50ibzj5g=w600')] 
 	before:bg-cover before:bg-center before:opacity-30 before:blur`,
 	contentWrapper: 'flex h-screen relative justify-center flex-wrap items-center',
 	copyContainer: 'w-1/2',
@@ -40,7 +40,7 @@ const Hero = () => {
 				<div className={style.cardContainer}>
 					<img
 						className="rounded-t-lg"
-						src="https://lh3.googleusercontent.com/ujepnqpnL0nDQIHsWxlCXzyw4pf01yjz1Jmb4kAQHumJAPrSEj0-e3ABMZlZ1HEpJoqwOcY_kgnuJGzfXbd2Tijri66GXUtfN2MXQA=s550"
+						src="https://lh3.googleusercontent.com/rJkZc8N393a-Xyx4TxKba6L9vWAGoCLG6z8R3v_AjZtb_mj3cJsNaS35wmUnYRxh3xt1HEmAN1oOcbjLbnDG_kMSNexAboU50ibzj5g=w600"
 						alt=""
 					/>
 					<div className={style.infoContainer}>
@@ -53,7 +53,7 @@ const Hero = () => {
 							<div className={style.name}>Jolly</div>
 							<a
 								className="text-[#1868b7]"
-								href="https://opensea.io/assets/0x495f947276749ce646f68ac8c248420045cb7b5e/2324922113504035910649522729980423429926362207300810036887725141691069366277"
+								href="https://opensea.io/assets/0x495f947276749ce646f68ac8c248420045cb7b5e/2324922113504035910649522729980423429926362207300810036887725138392534482945"
 							>
                 hola-kanola
 							</a>

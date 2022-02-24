@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 import { useWeb3 } from '@3rdweb/hooks';
 import { ThirdwebSDK } from '@3rdweb/sdk';
 import { CgWebsite } from 'react-icons/cg';
@@ -31,6 +30,8 @@ const style = {
 	statName: 'text-lg w-full text-center mt-1',
 	description: 'text-[#8a939b] text-xl w-max-1/4 flex-wrap mt-4',
 };
+
+// https://eth-rinkeby.alchemyapi.io/v2/R6BEd0gqDFDYNGU7RKGtEKDlgeynyDnf
 
 const Collection = () => {
 	const router = useRouter();
