@@ -31,8 +31,6 @@ const style = {
 	description: 'text-[#8a939b] text-xl w-max-1/4 flex-wrap mt-4',
 };
 
-// https://eth-rinkeby.alchemyapi.io/v2/R6BEd0gqDFDYNGU7RKGtEKDlgeynyDnf
-
 const Collection = () => {
 	const router = useRouter();
 	const { provider } = useWeb3();
@@ -97,8 +95,6 @@ const Collection = () => {
     }`;
 
 		const collectionData = await sanityClient.fetch(query);
-
-		console.log(collectionData);
 
 		// the query returns 1 object inside of an array
 		await setCollection(collectionData[0]);
