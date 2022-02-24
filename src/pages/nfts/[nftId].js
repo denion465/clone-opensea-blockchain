@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import NFTImage from '../../components/nft/NFTImage';
 import GeneralDetails from '../../components/nft/GeneralDetails';
 import ItemActivity from '../../components/nft/ItemActivity';
+import Purchase from '../../components/nft/Purchase';
 
 const style = {
 	wrapper: 'flex flex-col items-center container-lg text-[#e5e8eb]',
@@ -24,10 +25,7 @@ const Nft = () => {
 	const nftModule = useMemo(() => {
 		if (!provider) return;
 
-		const sdk = new ThirdwebSDK(
-			provider.getSigner(),
-			'https://eth-rinkeby.alchemyapi.io/v2/R6BEd0gqDFDYNGU7RKGtEKDlgeynyDnf'
-		);
+		const sdk = new ThirdwebSDK(provider.getSigner());
 		return sdk.getNFTModule('0xd2Ea13506450866E28a9b6569f508F18dd5A6ba2');
 	}, [provider]);
 
@@ -46,9 +44,7 @@ const Nft = () => {
 	const marketPlaceModule = useMemo(() => {
 		if (!provider) return;
 
-		const sdk = new ThirdwebSDK(
-			provider.getSigner(),
-			'https://eth-rinkeby.alchemyapi.io/v2/R6BEd0gqDFDYNGU7RKGtEKDlgeynyDnf'
+		const sdk = new ThirdwebSDK(provider.getSigner(),
 		);
 
 		return sdk.getMarketplaceModule(
@@ -74,6 +70,12 @@ const Nft = () => {
 						</div>
 						<div className={style.detailsContainer}>
 							<GeneralDetails selectedNft={selectedNft} />
+							<Purchase 
+								isListed={router.query.isListed}
+								selectedNft={selectedNft}
+								listings={listings}
+								marketPlaceModule={marketPlaceModule}
+							/>
 						</div>
 					</div>
 					<ItemActivity />
