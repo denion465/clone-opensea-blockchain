@@ -8,6 +8,8 @@ import { HiDotsVertical } from 'react-icons/hi';
 import Header from '../../components/Header';
 import { client } from '../../lib/sanityClient';
 import NFTCard from '../../components/NFTCard';
+import toast, { Toaster } from 'react-hot-toast';
+
 
 const style = {
 	bannerImageContainer: 'h-[20vh] w-screen overflow-hidden flex justify-center items-center',
@@ -29,6 +31,9 @@ const style = {
 	ethLogo: 'h-6 mr-2',
 	statName: 'text-lg w-full text-center mt-1',
 	description: 'text-[#8a939b] text-xl w-max-1/4 flex-wrap mt-4',
+	walletConnectWrapper: 'flex flex-col justify-center items-center h-screen w-screen bg-[#3b3d42] ',
+	button: 'border border-[#282b2f] bg-[#2081e2] p-[0.8rem] text-xl font-semibold rounded-lg cursor-pointer text-black',
+	details: 'text-lg text-center text=[#282b2f] font-semibold mt-4',
 };
 
 const Collection = () => {
@@ -98,111 +103,161 @@ const Collection = () => {
 		fetchCollectionData();
 	}, [collectionId]);
 
+	const { address, connectWallet } = useWeb3();
+
+	const welcomeUser = (userName, toastHandler = toast) => {
+		toastHandler.success(
+			`Welcome back${userName !== 'Unnamed' ? ` ${userName}` : ''}!`,
+			{
+				style: {
+					background: '#04111d',
+					color: '#fff',
+				},
+			}
+		);
+	};
+
+	useEffect(() => {
+		if (!address) return
+		;(async () => {
+			const userDoc = {
+				_type: 'users',
+				_id: address,
+				userName: 'Unnamed',
+				walletAddress: address,
+			};
+
+			const result = await client.createIfNotExists(userDoc);
+			welcomeUser(result.userName);
+
+		})();
+	}, [address]);
+
 	return (
-		<div className="overflow-hidden">
-			<Header />
-			<div className={style.bannerImageContainer}>
-				<img 
-					className={style.bannerImage} 
-					src={collection?.bannerImageUrl 
-						? collection.bannerImageUrl 
-						: 'https://via.placeholder.com/200'} 
-					alt="Banner" 
-				/>
-			</div>
-			<div className={style.infoContainer}>
-				<div className={style.midRow}>
-					<img
-						className={style.profileImg}
-						src={collection?.imageUrl 
-							? collection.imageUrl 
-							: 'https://via.placeholder.com/200'} 
-						alt="Profile image" 
-					/>
-				</div>
-				<div className={style.endRow}>
-					<div className={style.socialIconsContainer}>
-						<div className={style.socialIconsWrapper}>
-							<div className={style.socialIconsContent}>
-								<div className={style.socialIcon}>
-									<CgWebsite />
-								</div>
-								<div className={style.divider} />
-								<div className={style.socialIcon}>
-									<AiOutlineInstagram />
-								</div>
-								<div className={style.divider} />
-								<div className={style.socialIcon}>
-									<AiOutlineTwitter />
-								</div>
-								<div className={style.divider} />
-								<div className={style.socialIcon}>
-									<HiDotsVertical />
+
+		<>
+			{address ? (
+				<div className="overflow-hidden">
+					<Toaster position='top-center' reverseOrder={false}/>
+					<Header />
+					<div className={style.bannerImageContainer}>
+						<img 
+							className={style.bannerImage} 
+							src={collection?.bannerImageUrl 
+								? collection.bannerImageUrl 
+								: 'https://via.placeholder.com/200'} 
+							alt="Banner" 
+						/>
+					</div>
+					<div className={style.infoContainer}>
+						<div className={style.midRow}>
+							<img
+								className={style.profileImg}
+								src={collection?.imageUrl 
+									? collection.imageUrl 
+									: 'https://via.placeholder.com/200'} 
+								alt="Profile image" 
+							/>
+						</div>
+						<div className={style.endRow}>
+							<div className={style.socialIconsContainer}>
+								<div className={style.socialIconsWrapper}>
+									<div className={style.socialIconsContent}>
+										<div className={style.socialIcon}>
+											<CgWebsite />
+										</div>
+										<div className={style.divider} />
+										<div className={style.socialIcon}>
+											<AiOutlineInstagram />
+										</div>
+										<div className={style.divider} />
+										<div className={style.socialIcon}>
+											<AiOutlineTwitter />
+										</div>
+										<div className={style.divider} />
+										<div className={style.socialIcon}>
+											<HiDotsVertical />
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-				<div className={style.midRow}>
-					<div className={style.title}>{collection?.title}</div>
-				</div>
-				<div className={style.midRow}>
-					<div className={style.createdBy}>
+						<div className={style.midRow}>
+							<div className={style.title}>{collection?.title}</div>
+						</div>
+						<div className={style.midRow}>
+							<div className={style.createdBy}>
             Created by{' '}
-						<span className="text-[#2081e2]">{collection?.creator}</span>
+								<span className="text-[#2081e2]">{collection?.creator}</span>
+							</div>
+						</div>
+						<div className={style.midRow}>
+							<div className={style.statsContainer}>
+								<div className={style.collectionStat}>
+									<div className={style.statValue}>{nfts.length}</div>
+									<div className={style.statName}>items</div>
+								</div>
+								<div className={style.collectionStat}>
+									<div className={style.statValue}>
+										{collection?.allOwners ? collection.allOwners.length : ''}
+									</div>
+									<div className={style.statName}>owners</div>
+								</div>
+								<div className={style.collectionStat}>
+									<div className={style.statValue}>
+										<img
+											src="https://storage.opensea.io/files/6f8e2979d428180222796ff4a33ab929.svg"
+											alt="eth"
+											className={style.ethLogo}
+										/>
+										{collection?.floorPrice}
+									</div>
+									<div className={style.statName}>floor price</div>
+								</div>
+								<div className={style.collectionStat}>
+									<div className={style.statValue}>
+										<img
+											src="https://storage.opensea.io/files/6f8e2979d428180222796ff4a33ab929.svg"
+											alt="eth"
+											className={style.ethLogo}
+										/>
+										{collection?.volumeTraded}.5K
+									</div>
+									<div className={style.statName}>volume traded</div>
+								</div>
+							</div>
+						</div>
+						<div className={style.midRow}>
+							<div className={style.description}>{collection?.description}</div>
+						</div>
+					</div>
+					<div className="flex flex-wrap ">
+						{nfts.map((nftItem, id) => (
+							<NFTCard
+								key={id}
+								nftItem={nftItem}
+								title={collection?.title}
+								listings={listings}
+							/>
+						))}
 					</div>
 				</div>
-				<div className={style.midRow}>
-					<div className={style.statsContainer}>
-						<div className={style.collectionStat}>
-							<div className={style.statValue}>{nfts.length}</div>
-							<div className={style.statName}>items</div>
-						</div>
-						<div className={style.collectionStat}>
-							<div className={style.statValue}>
-								{collection?.allOwners ? collection.allOwners.length : ''}
-							</div>
-							<div className={style.statName}>owners</div>
-						</div>
-						<div className={style.collectionStat}>
-							<div className={style.statValue}>
-								<img
-									src="https://storage.opensea.io/files/6f8e2979d428180222796ff4a33ab929.svg"
-									alt="eth"
-									className={style.ethLogo}
-								/>
-								{collection?.floorPrice}
-							</div>
-							<div className={style.statName}>floor price</div>
-						</div>
-						<div className={style.collectionStat}>
-							<div className={style.statValue}>
-								<img
-									src="https://storage.opensea.io/files/6f8e2979d428180222796ff4a33ab929.svg"
-									alt="eth"
-									className={style.ethLogo}
-								/>
-								{collection?.volumeTraded}.5K
-							</div>
-							<div className={style.statName}>volume traded</div>
-						</div>
+
+			) : (
+				<div className={style.walletConnectWrapper}>
+					<button
+						className={style.button}
+						onClick={() => connectWallet('injected')}
+					>
+					Connect Wallet
+					</button>
+					<div className={style.details}>
+					You need MetaMask to be
+						<br /> able to run this app.
 					</div>
 				</div>
-				<div className={style.midRow}>
-					<div className={style.description}>{collection?.description}</div>
-				</div>
-			</div>
-			<div className="flex flex-wrap ">
-				{nfts.map((nftItem, id) => (
-					<NFTCard
-						key={id}
-						nftItem={nftItem}
-						title={collection?.title}
-						listings={listings}
-					/>
-				))}
-			</div>
-		</div>
+			)}
+		</>
 	);
 };
 
