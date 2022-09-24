@@ -24,7 +24,7 @@ Axios, Tailwindcss, 3rdweb, Sanity client
   
   * Download project dependencies using Npm
   ```shell
-    $ nmp i
+    $ npm install
   ```
 
   * Run application using Yarn
